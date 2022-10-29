@@ -15,8 +15,11 @@ public class Config {
 			properties = new Properties();
 			properties.load(input);
 			input.close();
+			System.out.println("retreived property by key: "+input);
 		} catch (IOException e) {
+			
 			System.out.println("File not found");
+			throw new RuntimeException("File not found");
 		}
 	}
 
