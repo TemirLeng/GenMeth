@@ -2,7 +2,7 @@
 
 ## Testing UI 
 
-## Testin API
+## Testing API
 
 ## Integration testing
 
