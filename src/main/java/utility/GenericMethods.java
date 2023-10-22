@@ -16,158 +16,151 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GenericMethods {
-	private static WebDriver driver;
 
-	public GenericMethods(WebDriver driver) {
-		this.driver = driver;
-	}
+    private static WebDriver driver;
 
-	public static WebDriver setup() {
+    public GenericMethods(WebDriver driver) {
+        this.driver = driver;
+    }
 
-		System.setProperty("webdriver.chrome.driver",
-				"\\C:\\Users\\Nurkulov\\Documents\\selenuim dependencies\\drivers\\chromedriver.exe");
-		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		driver.manage().window().maximize();
-		return driver;
-	}
+    public static WebDriver setup() {
 
-	public WebElement getElement(String type, String locator) {
-		String baseString = "Element found with ";
-		type = type.toLowerCase();
-		if (type.equalsIgnoreCase("id")) {
-			return driver.findElement(By.id(locator));
-		} else if (type.equalsIgnoreCase("css")) {
-			System.out.println("Element found with css: " + locator);
-			return driver.findElement(By.cssSelector(locator));
-		} else if (type.equalsIgnoreCase("xpath")) {
-			System.out.println("Element found with xpath: " + locator);
-			return driver.findElement(By.xpath(locator));
-		} else if (type.equalsIgnoreCase("name")) {
-			System.out.println("Element found with name: " + locator);
-			return driver.findElement(By.name(locator));
-		} else if (type.equalsIgnoreCase("className")) {
-			System.out.println("Element found with className: " + locator);
-			return driver.findElement(By.className(locator));
-		} else if (type.equalsIgnoreCase("linkText")) {
-			System.out.println("Element found with linkText: " + locator);
-			return driver.findElement(By.linkText(locator));
-		} else if (type.equalsIgnoreCase("partialText")) {
-			System.out.println("Element found with partialText: " + locator);
-			return driver.findElement(By.partialLinkText(locator));
-		} else {
-			System.out.println("Locator type is not supported");
-			return null;
-		}
+        System.setProperty("webdriver.chrome.driver",
+                "\\C:\\Users\\Nurkulov\\Documents\\selenuim dependencies\\drivers\\chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().window().maximize();
+        return driver;
+    }
 
-	}
+    public WebElement getElement(String type, String locator) {
+        String baseString = String.format("Element found with %s: %s", type, locator);
+        System.out.println(baseString);
+        type = type.toLowerCase();
+        if (type.equalsIgnoreCase("id")) {
+            return driver.findElement(By.id(locator));
+        } else if (type.equalsIgnoreCase("css")) {
+            return driver.findElement(By.cssSelector(locator));
+        } else if (type.equalsIgnoreCase("xpath")) {
+            return driver.findElement(By.xpath(locator));
+        } else if (type.equalsIgnoreCase("name")) {
+            return driver.findElement(By.name(locator));
+        } else if (type.equalsIgnoreCase("className")) {
+            return driver.findElement(By.className(locator));
+        } else if (type.equalsIgnoreCase("linkText")) {
+            return driver.findElement(By.linkText(locator));
+        } else if (type.equalsIgnoreCase("partialText")) {
+            return driver.findElement(By.partialLinkText(locator));
+        } else {
+            System.out.println("Locator type is not supported");
+            throw new UnsupportedOperationException();
+        }
 
-	public List<WebElement> getElements(String type, String locator) {
-		type = type.toLowerCase();
-		List<WebElement> elementList = new ArrayList();
-		if (type.equals("id")) {
-			elementList = this.driver.findElements(By.id(locator));
-		} else if (type.equals("css")) {
-			elementList = this.driver.findElements(By.cssSelector(locator));
-		} else if (type.equals("xpath")) {
-			elementList = this.driver.findElements(By.xpath(locator));
-		} else if (type.equals("name")) {
-			elementList = driver.findElements(By.name(locator));
-		} else if (type.equals("className")) {
-			elementList = driver.findElements(By.className(locator));
-		} else if (type.equals("linkText")) {
-			elementList = driver.findElements(By.linkText(locator));
-		} else if (type.equals("partialText")) {
-			elementList = driver.findElements(By.partialLinkText(locator));
-		} else if (type.equals("tagname")) {
-			elementList = driver.findElements(By.tagName(locator));
-		} else {
-			System.out.println("Locator type is not supported");
-		}
-		if (elementList.isEmpty()) {
-			System.out.println("Element not found with " + type + ": " + locator);
-		} else {
-			System.out.println("Element found with " + type + ": " + locator);
-		}
-		return elementList;
+    }
 
-	}
+    public List<WebElement> getElements(String type, String locator) {
+        type = type.toLowerCase();
+        List<WebElement> elementList;
+        if (type.equals("id")) {
+            elementList = driver.findElements(By.id(locator));
+        } else if (type.equals("css")) {
+            elementList = driver.findElements(By.cssSelector(locator));
+        } else if (type.equals("xpath")) {
+            elementList = driver.findElements(By.xpath(locator));
+        } else if (type.equals("name")) {
+            elementList = driver.findElements(By.name(locator));
+        } else if (type.equalsIgnoreCase("classname")) {
+            elementList = driver.findElements(By.className(locator));
+        } else if (type.equalsIgnoreCase("linktext")) {
+            elementList = driver.findElements(By.linkText(locator));
+        } else if (type.equalsIgnoreCase("partialtext")) {
+            elementList = driver.findElements(By.partialLinkText(locator));
+        } else if (type.equalsIgnoreCase("tagname")) {
+            elementList = driver.findElements(By.tagName(locator));
+        } else {
+            System.out.println("Locator type is not supported");
+            throw new UnsupportedOperationException();
+        }
+        System.out.println("Element found with " + type + ": " + locator);
+        return elementList;
 
-	public static void sleep(int sec) {
-		sec = sec * 1000;
-		try {
-			Thread.sleep(sec);
-		} catch (Exception e) {
-			System.out.println(e + " Exception thrown");
-		}
-	}
+    }
 
-	public boolean isElementPresent(String locator, String type) {
-		List<WebElement> elementList = getElements(locator, type);
-		int size = elementList.size();
-		if (size > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public static void sleep(int sec) {
+        sec = sec * 1000;
+        try {
+            Thread.sleep(sec);
+        } catch (Exception e) {
+            System.out.println(e + " Exception thrown");
+        }
+    }
 
-	public WebElement waitForElement(By locator, int timeout) {
-		WebElement element = null;
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-			element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-			System.out.println("Element appeared on the web page");
-		} catch (Exception e) {
-			System.out.println("Element ");
-		}
-		return element;
-	}
+    public boolean isElementPresent(String locator, String type) {
+        List<WebElement> elementList = getElements(locator, type);
+        int size = elementList.size();
+        if (size > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	public void waitToClick(By locator, int timeout) {
-		try {
-			WebElement element = null;
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
-			element = wait.until(ExpectedConditions.elementToBeClickable(locator));
-			System.out.println("Element is ready to be clicked");
-			element.click();
-		} catch (Exception e) {
-			System.out.println("Element did not appear on the page.");
-		}
-	}
+    public WebElement waitForElement(By locator, int timeout) {
+        WebElement element = null;
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+            element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+            System.out.println("Element appeared on the web page");
+        } catch (Exception e) {
+            System.out.println("Element ");
+        }
+        return element;
+    }
 
-	public static WebDriver setupBrowser(String driverType) {
-		driverType = driverType.toLowerCase();
+    public void waitToClick(By locator, int timeout) {
+        try {
+            WebElement element = null;
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+            element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            System.out.println("Element is ready to be clicked");
+            element.click();
+        } catch (Exception e) {
+            System.out.println("Element did not appear on the page.");
+        }
+    }
 
-		switch (driverType) {
-		case "chrome":
-			System.setProperty("webdriver.chrome.driver", Config.getPropValue("chromePath"));
-			driver = new ChromeDriver();
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.manage().window().maximize();
-			break;
+    public static WebDriver setupBrowser(String driverType) {
+        driverType = driverType.toLowerCase();
 
-		case "firefox":
-			System.setProperty("webdriver.gecko.driver", Config.getPropValue("ffPath"));
-			driver = new FirefoxDriver();
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.manage().window().maximize();
-			break;
+        switch (driverType) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", Config.getPropValue("chromePath"));
+                driver = new ChromeDriver();
+                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                driver.manage().window().maximize();
+                break;
 
-		case "ie":
-			System.setProperty("webdriver.ie.driver", Config.getPropValue("iePath"));
-			driver = new InternetExplorerDriver();
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.manage().window().maximize();
-			break;
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver", Config.getPropValue("ffPath"));
+                driver = new FirefoxDriver();
+                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                driver.manage().window().maximize();
+                break;
 
-		default:
-			System.setProperty("webdriver.chrome.driver", Config.getPropValue("chromePath"));
-			driver = new ChromeDriver();
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.manage().window().maximize();
-			break;
-		}
-		return driver;
-	}
+            case "ie":
+                System.setProperty("webdriver.ie.driver", Config.getPropValue("iePath"));
+                driver = new InternetExplorerDriver();
+                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                driver.manage().window().maximize();
+                break;
+
+            default:
+                System.setProperty("webdriver.chrome.driver", Config.getPropValue("chromePath"));
+                driver = new ChromeDriver();
+                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                driver.manage().window().maximize();
+                break;
+        }
+        return driver;
+    }
 }
