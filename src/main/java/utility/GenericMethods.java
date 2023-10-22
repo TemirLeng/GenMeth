@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GenericMethods {
+
     private static WebDriver driver;
 
     public GenericMethods(WebDriver driver) {
