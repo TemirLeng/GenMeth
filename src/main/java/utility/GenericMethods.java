@@ -1,6 +1,7 @@
 package utility;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -113,7 +114,7 @@ public class GenericMethods {
 	public WebElement waitForElement(By locator, int timeout) {
 		WebElement element = null;
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, timeout);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 			element = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 			System.out.println("Element appeared on the web page");
 		} catch (Exception e) {
@@ -125,7 +126,7 @@ public class GenericMethods {
 	public void waitToClick(By locator, int timeout) {
 		try {
 			WebElement element = null;
-			WebDriverWait wait = new WebDriverWait(driver, timeout);
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 			element = wait.until(ExpectedConditions.elementToBeClickable(locator));
 			System.out.println("Element is ready to be clicked");
 			element.click();
@@ -143,7 +144,6 @@ public class GenericMethods {
 			driver = new ChromeDriver();
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.manage().window().maximize();
-
 			break;
 
 		case "firefox":
@@ -151,7 +151,6 @@ public class GenericMethods {
 			driver = new FirefoxDriver();
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.manage().window().maximize();
-
 			break;
 
 		case "ie":
@@ -159,7 +158,6 @@ public class GenericMethods {
 			driver = new InternetExplorerDriver();
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.manage().window().maximize();
-
 			break;
 
 		default:
