@@ -27,31 +27,32 @@ public class GenericMethods {
 		System.setProperty("webdriver.chrome.driver",
 				"\\C:\\Users\\Nurkulov\\Documents\\selenuim dependencies\\drivers\\chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		driver.manage().window().maximize();
 		return driver;
 	}
 
 	public WebElement getElement(String type, String locator) {
+		String baseString = "Element found with ";
 		type = type.toLowerCase();
-		if (type.equals("id")) {
-			return this.driver.findElement(By.id(locator));
-		} else if (type.equals("css")) {
+		if (type.equalsIgnoreCase("id")) {
+			return driver.findElement(By.id(locator));
+		} else if (type.equalsIgnoreCase("css")) {
 			System.out.println("Element found with css: " + locator);
-			return this.driver.findElement(By.cssSelector(locator));
-		} else if (type.equals("xpath")) {
+			return driver.findElement(By.cssSelector(locator));
+		} else if (type.equalsIgnoreCase("xpath")) {
 			System.out.println("Element found with xpath: " + locator);
-			return this.driver.findElement(By.xpath(locator));
-		} else if (type.equals("name")) {
+			return driver.findElement(By.xpath(locator));
+		} else if (type.equalsIgnoreCase("name")) {
 			System.out.println("Element found with name: " + locator);
 			return driver.findElement(By.name(locator));
-		} else if (type.equals("className")) {
+		} else if (type.equalsIgnoreCase("className")) {
 			System.out.println("Element found with className: " + locator);
 			return driver.findElement(By.className(locator));
-		} else if (type.equals("linkText")) {
+		} else if (type.equalsIgnoreCase("linkText")) {
 			System.out.println("Element found with linkText: " + locator);
 			return driver.findElement(By.linkText(locator));
-		} else if (type.equals("partialText")) {
+		} else if (type.equalsIgnoreCase("partialText")) {
 			System.out.println("Element found with partialText: " + locator);
 			return driver.findElement(By.partialLinkText(locator));
 		} else {
